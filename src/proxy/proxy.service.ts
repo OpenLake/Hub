@@ -27,6 +27,8 @@ export class ProxyService {
       const forwardedHeaders = { ...headers };
       delete forwardedHeaders['host'];
       delete forwardedHeaders['content-length'];
+      delete forwardedHeaders['connection'];
+      delete forwardedHeaders['accept-encoding'];
 
       const response = await axios({
         method,

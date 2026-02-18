@@ -14,6 +14,7 @@ import { ResponseInterceptor } from './common/interceptors/response.interceptor'
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { AnnouncementsModule } from './announcements/announcements.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { FeedbackModule } from './feedback/feedback.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -24,6 +25,7 @@ import { ConfigModule } from '@nestjs/config';
     EventsModule,
     AnnouncementsModule,
     OrganizationsModule,
+    FeedbackModule,
     MarketplaceModule,
     AcademicsModule,
     JobsModule,

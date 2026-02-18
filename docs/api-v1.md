@@ -62,11 +62,15 @@ All requests require: `Authorization: Bearer <JWT>` (unless public)
 - `GET /academics/reviews` - Get recent reviews (Scope: `academics:read`)
 - `POST /academics/reviews` - Submit review (Scope: `academics:write`)
 
-### 3.4 Jobs (CCPS)
+### 3.4 Feedback (CoSA)
+- `GET /feedback` - View all feedback (Maps to CoSA `/api/feedback/view-feedback`) (Scope: `feedback:read`)
+- `POST /feedback` - Submit new feedback (Maps to CoSA `/api/feedback/add`) (Scope: `feedback:write`)
+
+### 3.5 Jobs (CCPS)
 - `GET /jobs` - List open positions (Scope: `jobs:read`)
 - `POST /jobs/:id/apply` - Apply for job (Scope: `jobs:apply`)
 
-### 3.5 Aggregation
+### 3.6 Aggregation
 - `GET /home` - Dashboard data
     - **Response:**
       ```json
@@ -83,7 +87,7 @@ All requests require: `Authorization: Bearer <JWT>` (unless public)
       }
       ```
 
-### 3.6 System
+### 3.7 System
 - `GET /health` - Service health status
     - **Response:**
       ```json

@@ -1,4 +1,4 @@
-## OpenLake Hub
+# OpenLake Hub
 
 **OpenLake Hub** is the integration, synchronization, and aggregation backbone of the OpenLake ecosystem. It connects independent applications, synchronizes data, and provides a unified API for cross-platform features.
 

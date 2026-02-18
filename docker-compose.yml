@@ -1,0 +1,29 @@
+services:
+  hub:
+    build: .
+    container_name: openlake-hub
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - GLOBAL_PREFIX=api/v1
+      - LOG_LEVEL=info
+      # Downstream Services (Replace with real internal IPs/DNS in production)
+      - COSA_URL=${COSA_URL:-http://host.docker.internal:3001}
+      - MARKETPLACE_URL=${MARKETPLACE_URL:-http://host.docker.internal:3002}
+      - ACADEMICS_URL=${ACADEMICS_URL:-http://host.docker.internal:3003}
+      - JOBS_URL=${JOBS_URL:-http://host.docker.internal:3004}
+      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL:-https://auth.openlake.in}
+
+  nginx:
+    image: nginx:alpine
+    container_name: openlake-gateway
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/hub.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - hub

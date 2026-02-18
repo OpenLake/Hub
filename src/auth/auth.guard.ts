@@ -5,7 +5,6 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import { createRemoteJWKSet, jwtVerify } from 'jose';
 import * as crypto from 'crypto';
 
 @Injectable()
@@ -13,10 +12,7 @@ export class AuthGuard implements CanActivate {
   private readonly logger = new Logger(AuthGuard.name);
   private JWKS: any;
 
-  constructor() {
-    const authUrl = process.env.AUTH_SERVICE_URL || 'https://auth.openlake.in';
-    this.JWKS = createRemoteJWKSet(new URL(`${authUrl}/.well-known/jwks.json`));
-  }
+  constructor() {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -27,7 +23,15 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const { payload } = await jwtVerify(token, this.JWKS, {
+      // Dynamic import for ESM compatibility in Vercel/CommonJS environment
+      const jose = await import('jose');
+      
+      if (!this.JWKS) {
+        const authUrl = process.env.AUTH_SERVICE_URL || 'https://auth.openlake.in';
+        this.JWKS = jose.createRemoteJWKSet(new URL(`${authUrl}/.well-known/jwks.json`));
+      }
+
+      const { payload } = await jose.jwtVerify(token, this.JWKS, {
         issuer: process.env.AUTH_ISSUER || 'openlake-auth',
       });
 

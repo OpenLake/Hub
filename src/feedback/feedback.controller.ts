@@ -15,7 +15,7 @@ export class FeedbackController {
     try {
       const result = await this.proxy.forward({
         service: 'COSA',
-        url: `${this.COSA_API}/view-feedbacks`,
+        url: `${this.COSA_API}/view-feedback`,
         method: 'GET',
         headers: req.headers,
         params: { ...(req.query as any) },

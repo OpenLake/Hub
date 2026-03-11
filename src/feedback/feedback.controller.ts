@@ -9,6 +9,26 @@ export class FeedbackController {
   private readonly SERVICE_URL = process.env.COSA_URL || 'http://localhost:3001';
   private readonly COSA_API = `${this.SERVICE_URL}/api/feedback`;
 
+  @Get('targets')
+  async getTargets(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
+    // Hub: GET /api/v1/feedback/targets -> CoSA: GET /api/feedback/get-targetid
+    try {
+      const result = await this.proxy.forward({
+        service: 'COSA',
+        url: `${this.COSA_API}/get-targetid`,
+        method: 'GET',
+        headers: req.headers,
+      });
+      res.status(result.status).headers(result.headers).send(result.data);
+    } catch (err) {
+      if (err.response) {
+        res.status(err.response.status).headers(err.response.headers).send(err.response.data);
+      } else {
+        res.status(502).send({ message: 'Bad Gateway', error: err.message });
+      }
+    }
+  }
+
   @Get()
   async getAll(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
     // Hub: GET /api/v1/feedback -> CoSA: GET /api/feedback/view-feedback

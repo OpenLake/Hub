@@ -16,6 +16,7 @@ import { AnnouncementsModule } from './announcements/announcements.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ConfigModule } from '@nestjs/config';
     JobsModule,
     HomeModule,
     HealthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

@@ -16,6 +16,7 @@ export class UserService {
     
     const ACADMAP_URL = this.configService.get<string>('ACADMAP_URL') || 'https://acadmap.openlake.in';
     const COSA_URL = this.configService.get<string>('COSA_URL') || 'https://cosa.openlake.in';
+    const SMART_INSTI_URL = this.configService.get<string>('SMART_INSTI_URL') || 'http://localhost:8000';
 
     const services = [
       {
@@ -28,8 +29,14 @@ export class UserService {
         provider: 'CoSADB',
         url: `${COSA_URL}/api/v1/internal/user?email=${email}`,
       },
+      {
+        name: 'institute',
+        provider: 'Smart Insti',
+        url: `${SMART_INSTI_URL}/api/v1/internal/user?email=${email}`,
+      },
       // Add more services here as they implement the internal API
     ];
+
 
     const results = await Promise.allSettled(
       services.map((service) =>
